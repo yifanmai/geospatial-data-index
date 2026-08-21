@@ -1,0 +1,64 @@
+from time import sleep
+from pathlib import Path
+from pystac import Catalog, Collection, Item, CatalogType, Link
+
+
+# Catalogs and items can have errors... we need to mark them somehow
+
+# We want to get to convert catalogs to "Self-contained Metadata Only"
+
+
+
+USE_SLUG = "USE_SLUG"
+USE_ID = "USE_ID"
+
+DERIVED_FROM = "derived_from"
+
+
+def crawl_catalog(source_path: str, destination_path: Path, id_strategy: str = USE_ID):
+    catalog = Catalog.from_file(source_path)
+    normalize_and_save_catalog(catalog, destination_path, id_strategy)
+    catalog.save(catalog_type=CatalogType.SELF_CONTAINED)
+    catalog.validate_all()
+
+def normalize_and_save_catalog(catalog: Catalog, destination_path: Path, id_strategy: str = USE_ID):
+    sleep(0.1)
+    destination_path.mkdir(parents=True, exist_ok=True)
+    catalog.resolve_links()
+    catalog_destination_directory = destination_path / catalog.id
+    if isinstance(catalog, Collection):
+        catalog_destination_path = catalog_destination_directory / "collection.json"
+    else:
+        catalog_destination_path = catalog_destination_directory / "catalog.json"
+    # See https://github.com/radiantearth/stac-spec/blob/v1.1.0/best-practices.md#using-relation-types
+    # for "derived_from" link
+    if not catalog.get_single_link(DERIVED_FROM):
+        catalog.add_link(Link(rel=DERIVED_FROM, target=catalog.get_self_href(), media_type="application/json", title="Mirror of STAC object"))
+    catalog.set_self_href(str(catalog_destination_path))
+    
+    for child in catalog.get_children():
+        try:
+            normalize_and_save_catalog(child, catalog_destination_directory, id_strategy)
+        except Exception as e:
+            print(e)
+    if isinstance(catalog, Collection):
+        for item in catalog.get_items():
+            normalize_and_save_item(item, catalog_destination_directory, id_strategy)
+    catalog.save_object()
+
+
+def normalize_and_save_item(item: Item, collection_destination_directory: Path, id_strategy: str = USE_ID):
+    sleep(0.1)
+    collection_destination_directory.mkdir(parents=True, exist_ok=True)
+    item_destination_path = collection_destination_directory / f"{item.id}.json"
+    
+    collection_links = item.get_links("collection")
+    if len(collection_links) > 1:
+        raise Exception("Expected at most one collection link")
+    elif len(collection_links) == 1:
+        collection_links[0].target = item.get_parent().get_self_href()
+    if not item.get_single_link(DERIVED_FROM):
+        item.add_link(Link(rel=DERIVED_FROM, target=item.get_self_href(), media_type="application/json", title="Mirror of STAC object"))
+    item.set_self_href(str(item_destination_path))
+    item.save_object()
+    

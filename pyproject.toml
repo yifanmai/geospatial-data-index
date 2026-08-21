@@ -1,0 +1,21 @@
+[project]
+name = "geospatial-data-index"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Yifan Mai", email = "yifan@cs.stanford.edu" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "pymongo[srv]>=4.17.0",
+    "pystac[validation]>=1.15.2",
+    "requests>=2.34.2",
+]
+
+[project.scripts]
+geospatial-data-index = "geospatial_data_index:main"
+
+[build-system]
+requires = ["uv_build>=0.9.10,<0.10.0"]
+build-backend = "uv_build"
