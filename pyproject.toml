@@ -8,6 +8,7 @@ authors = [
 ]
 requires-python = ">=3.12"
 dependencies = [
+    "geojson-validator>=0.7.0",
     "pymongo[srv]>=4.17.0",
     "pystac[validation]>=1.15.2",
     "requests>=2.34.2",
@@ -15,6 +16,9 @@ dependencies = [
 
 [project.scripts]
 geospatial-data-index = "geospatial_data_index:main"
+
+
+shard-catalogs = "geospatial_data_index.scripts.shard_catalogs:shard_catalogs"
 
 [build-system]
 requires = ["uv_build>=0.9.10,<0.10.0"]
