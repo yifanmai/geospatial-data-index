@@ -1,3 +1,4 @@
+import os
 import json
 import logging
 from pathlib import Path
@@ -28,23 +29,23 @@ STATUS_FILE_NAME = "status.json"
 STATUS_KEY = "status"
 
 
-def _ensure_directory_exists(directory_path: Path) -> None:
-    directory_path.mkdir(parents=True, exist_ok=True)
+def _crawl_status_path(catalog: Catalog) -> str:
+    catalog_href = catalog.get_self_href()
+    assert catalog_href
+    return os.path.join(os.path.dirname(catalog_href), STATUS_FILE_NAME)
 
-def get_crawl_status(catalog_destination_directory: Path) -> str:
-    status_destination_path = catalog_destination_directory / STATUS_FILE_NAME
+
+def _get_crawl_status(catalog: Catalog) -> str:
     try:
-        with open(status_destination_path, "r") as status_file:
+        with open(_crawl_status_path(catalog), "r") as status_file:
             status_contents = json.load(status_file)
             return status_contents[STATUS_KEY]
     except (FileNotFoundError, json.decoder.JSONDecodeError, KeyError):
         return NOT_STARTED
 
 
-def set_crawl_status(catalog_destination_directory: Path, status: str) -> None:
-    catalog_destination_directory.mkdir(parents=True, exist_ok=True)
-    status_destination_path = catalog_destination_directory / STATUS_FILE_NAME
-    with open(status_destination_path, "w") as status_file:
+def _set_crawl_status(catalog: Catalog, status: str) -> None:
+    with open(_crawl_status_path(catalog), "w") as status_file:
         json.dump({STATUS_KEY: status}, status_file)
 
 
@@ -58,52 +59,79 @@ def add_derived_from_link_to_self_href(stac_object: STACObject) -> None:
 
 
 def crawl_root_catalog(source_path: str, destination_path: Path):
-    catalog = Catalog.from_file(source_path)
-    # atomicity?
-    catalog.save_object()
-    normalize_and_save_catalog(catalog, None, destination_path, BestPracticesLayoutStrategy())
+    href_layout_strategy = BestPracticesLayoutStrategy()
+    source_catalog = Catalog.from_file(source_path)
+    catalog_destination_href = href_layout_strategy.get_href(source_catalog, str(destination_path), is_root=True)
+    try:
+        # Try to resume from destination
+        catalog = Catalog.from_file(catalog_destination_href)
+    except (FileNotFoundError, json.decoder.JSONDecodeError):
+        source_catalog.set_self_href(catalog_destination_href)
+        source_catalog.save_object()
+        catalog = source_catalog
+    crawl_catalog_recursively(catalog, BestPracticesLayoutStrategy())
 
 
-def normalize_and_save_catalog(catalog: Catalog, parent_catalog: Optional[Catalog], catalog_destination_directory: Path, href_layout_strategy: HrefLayoutStrategy) -> None:
-    _ensure_directory_exists(catalog_destination_directory)
-    crawl_status = get_crawl_status(catalog_destination_directory)
-    if crawl_status == FINISHED:
-        print(f"skipping {catalog_destination_directory}")
+def crawl_catalog_recursively(catalog: Catalog, href_layout_strategy: HrefLayoutStrategy) -> None:
+    """
+    Precondition: catalog, parent catalog, and all ancestors are in the destination, and have correct parent and root links.
+    Postcondition: all descendents are in the destination directory."""
+    catalog_href = catalog.get_self_href()
+    if _get_crawl_status(catalog) == FINISHED:
+        logger.debug(f"skipping {catalog_href}")
         return
-
+    logger.debug(f"crawling {catalog_href}")
+    _set_crawl_status(catalog, RUNNING)
     
-
-    print(f"writing {catalog_destination_directory}")
-    add_derived_from_link_to_self_href(catalog)
-    catalog.set_self_href(href_layout_strategy.get_href(catalog, str(catalog_destination_directory), is_root=parent_catalog is None))
+    catalog_href = catalog.get_self_href()
     for child in catalog.get_children():
-        try:
-            normalize_and_save_catalog(child, parent_catalog, catalog_destination_directory, href_layout_strategy)
-        except Exception:
-            logger.exception(f"Could not save {child.id} to {catalog_destination_directory}")
+        # Child can be from the source or destination directory.
+        child_href = href_layout_strategy.get_href(child, catalog_href, is_root=False)
+        # Mirror this child from the source to the destination directory.
+        # This is idempotent.
+        # If the child is already in the destination directory, this does a no-op round trip.
+        child.set_self_href(child_href)
+        child.save_object()
+        catalog.save_object()
+        crawl_catalog_recursively(child, href_layout_strategy)
     if isinstance(catalog, Collection):
         for item in catalog.get_items():
-            try:
-                normalize_and_save_item(item, catalog, catalog_destination_directory, href_layout_strategy)
-            except Exception:
-                logger.exception(f"Could not save {item.id} to {catalog_destination_directory}")
-    set_crawl_status(catalog_destination_directory, FINISHED)
+            update_item_links(item, catalog, href_layout_strategy)
+            item.save_object()
+            catalog.save_object()
+    _set_crawl_status(catalog, FINISHED)
     catalog.save_object()
 
 
-def normalize_and_save_item(item: Item, collection: Collection, collection_destination_directory: Path, href_layout_strategy: HrefLayoutStrategy) -> None:
-    sleep(0.1)
-    _ensure_directory_exists(collection_destination_directory)
+def update_catalog_links(catalog: Catalog, parent_catalog: Catalog, href_layout_strategy: HrefLayoutStrategy) -> None:
+    """
+    Precondition: all ancestors are in the destination, and have correct parent and root links.
+    """
+    root = parent_catalog.get_root()
+    assert root
+    catalog.set_root(root)
+    catalog.set_parent(parent_catalog)
+    parent_href = catalog.get_self_href()
+    assert parent_href
+    add_derived_from_link_to_self_href(catalog)
+    catalog.set_self_href(href_layout_strategy.get_href(catalog, parent_href, is_root=False))
+
+
+
+def update_item_links(item: Item, collection: Collection, href_layout_strategy: HrefLayoutStrategy) -> None:
+    """
+    Precondition: all ancestors are in the destination, and have correct parent and root links.
+    """
+    root = collection.get_root()
+    assert root
+    item.set_root(root)
+    item.set_parent(collection)
     collection_href = collection.get_self_href()
     assert collection_href
-    collection_links = item.get_links("collection")
-    if len(collection_links) > 1:
-        raise Exception("Expected at most one collection link")
-    elif len(collection_links) == 1:
-        collection_links[0].target = collection_href
-    elif len(collection_links) == 0:
-        item.add_link(Link.parent(collection))
+    if len(item.get_links("collection")) == 1:
+        item.get_links("collection")[0].target = collection_href
+    else:
+        item.remove_links("collection")
+        item.add_link(Link.collection(collection))
     add_derived_from_link_to_self_href(item)
-    item.set_self_href(href_layout_strategy.get_href(item, str(collection_destination_directory), is_root=False))
-    item.save_object()
-    collection.save_object()
+    item.set_self_href(href_layout_strategy.get_href(item, collection_href, is_root=False))
