@@ -1,10 +1,9 @@
 import json
-import enum
 from time import sleep
 from pathlib import Path
 
 
-from pystac import Catalog, Collection, Item, CatalogType, Link, STACObject
+from pystac import Catalog, Collection, Item, Link, STACObject
 
 
 # Catalogs and items can have errors... we need to mark them somehow
@@ -18,7 +17,6 @@ DERIVED_FROM = "derived_from"
 NOT_STARTED = "not_started"
 RUNNING = "running"
 FINISHED = "finished"
-    
 
 # Saving and loading crawl status
 
@@ -40,11 +38,6 @@ def set_crawl_status(catalog_destination_directory: Path, status: str) -> str:
     status_destination_path = catalog_destination_directory / STATUS_FILE_NAME
     with open(status_destination_path, "w") as status_file:
         json.dump({STATUS_KEY: status}, status_file)
-
-
-# def post_process_catalog():
-#     catalog.save(catalog_type=CatalogType.SELF_CONTAINED)
-#     catalog.validate_all()
 
 
 def add_derived_from_link(stac_object: STACObject):
