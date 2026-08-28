@@ -22,3 +22,10 @@ crawl-catalog = "geospatial_data_index.scripts.crawl_catalog:main"
 [build-system]
 requires = ["uv_build>=0.9.10,<0.10.0"]
 build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "ruff>=0.16.5",
+    "ty>=0.0.75",
+]
