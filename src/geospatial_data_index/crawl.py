@@ -4,6 +4,7 @@ from pathlib import Path
 from time import sleep
 
 from pystac import Catalog, Collection, Item, Link, STACObject
+from pystac.layout import HrefLayoutStrategy, BestPracticesLayoutStrategy
 
 logger = logging.getLogger(__name__)
 
@@ -51,17 +52,18 @@ def add_derived_from_link_to_self_href(stac_object: STACObject) -> None:
         stac_object.add_link(Link(rel=DERIVED_FROM, target=self_href, media_type="application/json"))
 
 
-def crawl_root_catalog(source_path: str, destination_path: Path, id_strategy: str = USE_ID):
+def crawl_root_catalog(source_path: str, destination_path: Path):
     catalog = Catalog.from_file(source_path)
-    normalize_and_save_catalog(catalog, destination_path, id_strategy)
+    normalize_and_save_catalog(catalog, destination_path, BestPracticesLayoutStrategy())
 
 
-def normalize_and_save_catalog(catalog: Catalog, destination_path: Path, id_strategy: str = USE_ID) -> None:
+def normalize_and_save_catalog(catalog: Catalog, destination_path: Path, href_layout_strategy: HrefLayoutStrategy) -> None:
     catalog_destination_directory = destination_path / catalog.id
-    if get_crawl_status(catalog_destination_directory) == FINISHED:
+    crawl_status = get_crawl_status(catalog_destination_directory)
+    if crawl_status == FINISHED:
         print(f"skipping {catalog_destination_directory}")
         return
-    sleep(0.1)
+
     print(f"writing {catalog_destination_directory}")
     destination_path.mkdir(parents=True, exist_ok=True)
     catalog.resolve_links()
@@ -73,20 +75,20 @@ def normalize_and_save_catalog(catalog: Catalog, destination_path: Path, id_stra
     catalog.set_self_href(str(catalog_destination_path))
     for child in catalog.get_children():
         try:
-            normalize_and_save_catalog(child, catalog_destination_directory, id_strategy)
+            normalize_and_save_catalog(child, catalog_destination_directory, href_layout_strategy)
         except Exception:
             logger.exception(f"Could not save {child.id} to {catalog_destination_directory}")
     if isinstance(catalog, Collection):
         for item in catalog.get_items():
             try:
-                normalize_and_save_item(item, catalog, catalog_destination_directory, id_strategy)
+                normalize_and_save_item(item, catalog, catalog_destination_directory, href_layout_strategy)
             except Exception:
                 logger.exception(f"Could not save {item.id} to {catalog_destination_directory}")
     set_crawl_status(catalog_destination_directory, FINISHED)
     catalog.save_object()
 
 
-def normalize_and_save_item(item: Item, collection: Collection, collection_destination_directory: Path, id_strategy: str = USE_ID) -> None:
+def normalize_and_save_item(item: Item, collection: Collection, collection_destination_directory: Path, href_layout_strategy: HrefLayoutStrategy) -> None:
     sleep(0.1)
     collection_destination_directory.mkdir(parents=True, exist_ok=True)
     item_destination_path = collection_destination_directory / f"{item.id}.json"
