@@ -34,7 +34,7 @@ def shard_catalogs():
     for catalog in public_static_catalogs:
         host_to_catalogs[get_catalog_host(catalog)].append(catalog)
 
-    shards = [{}] * num_shards
+    shards = [{} for _ in range(num_shards)]
 
     for index, (host, catalog) in enumerate(host_to_catalogs.items()):
         shards[index % num_shards][host] = catalog
@@ -44,6 +44,6 @@ def shard_catalogs():
         shard_path = output_path / f"shard_{index}.json"
         with open(shard_path, "w") as shard_file:
             print(f"writing {shard_path}")
-            json.dump(shards[index], shard_file, indent=2)
+            json.dump(shard, shard_file, indent=2)
 
     print(f"Wrote {len(public_static_catalogs)} catalogs in {len(host_to_catalogs)} hosts to {num_shards} shards.")

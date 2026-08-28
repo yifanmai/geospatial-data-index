@@ -1,19 +1,4 @@
 {
-  "digital-atlas.s3.amazonaws.com": [
-    {
-      "id": 114,
-      "url": "https://digital-atlas.s3.amazonaws.com/stac/public_stac/catalog.json",
-      "slug": "africa-agriculture-adaptation-atlas",
-      "title": "African Agriculture Adaptation Atlas STAC catalog",
-      "summary": "This STAC contains the data used within the Africa Agriculture Adaptation Atlas project found [here](https://adaptationatlas.cgiar.org/). This includes data related to climate hazards, crop production, crop exposure to climate hazards, demographics and more across Sub-Saharan Africa.",
-      "access": "public",
-      "created": "2025-04-17T13:20:19.986Z",
-      "updated": "2025-04-17T13:20:19.986Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
   "data.source.coop": [
     {
       "id": 160,
@@ -315,77 +300,6 @@
       "accessInfo": null
     }
   ],
-  "storage.googleapis.com": [
-    {
-      "id": 27,
-      "url": "https://storage.googleapis.com/cfo-public/catalog.json",
-      "slug": "forest-observatory",
-      "title": "California Forest Observatory",
-      "summary": "The Forest Observatory is a data-driven forest monitoring system that maps the drivers of wildfire behavior across the state with a focus on vegetation fuels. Data are available for non-commercial use under the Forest Observatory [terms of use](https://forestobservatory.com/legal.html).",
-      "access": "public",
-      "created": "2021-01-14T17:33:34.176Z",
-      "updated": "2021-01-14T17:33:34.176Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    },
-    {
-      "id": 178,
-      "url": "https://storage.googleapis.com/carto-portolan-ide-extremadura/catalog.json",
-      "slug": "extremadura-sdi-cictex",
-      "title": "Extremadura SDI (CICTEX)",
-      "summary": "Portolan catalog with a selection of geospatial data from the Regional Government of Extremadura (CICTEX), originally distributed via the SITEX Download Centre (sitex.juntaex.es/SITEX/centrodescargas). Data has been reprojected to EPSG:4326 and converted to cloud-native formats (GeoParquet, PMTiles); this is not the official distribution. Licensed CC-BY 4.0 CICTEX, Junta de Extremadura. This catalog is a publishing demo using Portolan and is not an official data source.",
-      "access": "public",
-      "created": "2026-08-18T13:39:34.538Z",
-      "updated": "2026-08-18T13:39:34.538Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    },
-    {
-      "id": 21,
-      "url": "https://storage.googleapis.com/earthengine-stac/catalog/catalog.json",
-      "slug": "google-earth-engine",
-      "title": "Google Earth Engine",
-      "summary": "List of all rasters and vectors present in the [Google Earth Engine Catalog](https://developers.google.com/earth-engine/datasets/).",
-      "access": "public",
-      "created": "2020-10-01T19:38:14.208Z",
-      "updated": "2026-06-27T20:09:41.159Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
-  "capella-open-data.s3.us-west-2.amazonaws.com": [
-    {
-      "id": 55,
-      "url": "https://capella-open-data.s3.us-west-2.amazonaws.com/stac/catalog.json",
-      "slug": "capella-space-open-data",
-      "title": "Capella Space Open Data",
-      "summary": "This open SAR dataset contains > 100 Capella Space scenes. \n\nImaging modes: Spotlight, Stripmap and Sliding Spotlight. \n\nImage product types: Single Look Complex (SLC), Geocoded Terrain Corrected (GEO), Geocoded Ellipsoid Corrected (GEC) and Sensor Independent Complex Data (SICD)",
-      "access": "public",
-      "created": "2022-09-28T05:32:04.142Z",
-      "updated": "2022-09-28T05:32:04.142Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
-  "vims.univ-nantes.fr": [
-    {
-      "id": 83,
-      "url": "https://vims.univ-nantes.fr/stac/catalog.json",
-      "slug": "cassini-vims-ir",
-      "title": "Cassini VIMS-IR STAC catalog",
-      "summary": "[Cassini/VIMS infrared dataset](https://vims.univ-nantes.fr) hosted at the University of Nantes.",
-      "access": "public",
-      "created": "2023-09-18T15:35:38.860Z",
-      "updated": "2023-10-02T15:35:38.860Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
   "ciesin.github.io": [
     {
       "id": 144,
@@ -396,51 +310,6 @@
       "access": "public",
       "created": "2026-02-11T16:20:29.070Z",
       "updated": "2026-02-11T16:20:29.070Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
-  "coclico.blob.core.windows.net": [
-    {
-      "id": 108,
-      "url": "https://coclico.blob.core.windows.net/stac/v1/catalog.json",
-      "slug": "coclico",
-      "title": "CoCliCo STAC Catalog",
-      "summary": "The funded CoCliCo project enhances coastal risk management by offering an open-source platform for assessing sea-level rise impacts. It visualizes, analyzes, and contextualizes coastal risks, combining geospatial data with decision tools, uniting experts in adaptation and risk communication.",
-      "access": "public",
-      "created": "2024-12-02T23:43:01.952Z",
-      "updated": "2024-12-02T23:43:01.952Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
-  "spatio-temporal-asset-catalog.s3.ap-south-1.amazonaws.com": [
-    {
-      "id": 151,
-      "url": "https://spatio-temporal-asset-catalog.s3.ap-south-1.amazonaws.com/CorestackCatalogs_merged_collection/catalog.json",
-      "slug": "core-stack-spatio-temporal-asset-catalog",
-      "title": "CoRE Stack Spatio Temporal Asset Catalog",
-      "summary": "This spatio temporal asset catalog contains all data layers of CoREStack (https://core-stack.org/). The data layers are generated at an administrative tehsil level, and some layers are available for Pan India.",
-      "access": "public",
-      "created": "2026-04-21T09:37:25.974Z",
-      "updated": "2026-04-21T09:37:25.974Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
-  "esa.pages.eox.at": [
-    {
-      "id": 91,
-      "url": "https://esa.pages.eox.at/cubes-and-clouds-catalog/MOOC_Cubes_and_clouds/catalog.json",
-      "slug": "cubes-and-clouds-snow-cover",
-      "title": "Cubes and Clouds - Snow Cover",
-      "summary": "Snow Cover Community Mapping Project of the MOOC Cubes and Clouds - Cloud Native Open Data Science for Earth Observation. Every item comes from a successful participant of the online course!",
-      "access": "public",
-      "created": "2024-02-21T15:38:28.785Z",
-      "updated": "2024-02-21T15:38:28.785Z",
       "isPrivate": false,
       "isApi": false,
       "accessInfo": null
@@ -469,51 +338,6 @@
       "access": "public",
       "created": "2023-11-06T14:18:20.927Z",
       "updated": "2023-11-06T14:18:20.927Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
-  "fiboa.org": [
-    {
-      "id": 94,
-      "url": "https://fiboa.org/stac/catalog.json",
-      "slug": "fiboa",
-      "title": "fiboa Field Boundaries",
-      "summary": "The Field Boundaries for Agriculture (fiboa) project is focused on making field boundary data openly available in a unified format on a global scale.\nThis STAC catalog provides a collection of field boundary data from various sources, but all converted to be fiboa compliant.",
-      "access": "public",
-      "created": "2024-05-03T21:27:19.565Z",
-      "updated": "2024-05-03T21:27:19.565Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
-  "pta.data.lit.fmi.fi": [
-    {
-      "id": 42,
-      "url": "https://pta.data.lit.fmi.fi/stac/root.json",
-      "slug": "fmi-ard-finland",
-      "title": "FMI ARD Finland",
-      "summary": "Analysis Ready Data from the Finnish Meteorological Institute in the Finnish reference grid epsg:3067. Sentinel-1 and -2 as dekad mosaics as main items, but many other related data sets over Finland are included as well. For example the forestry inventory data as COGs are available as well.",
-      "access": "public",
-      "created": "2021-11-06T07:05:11.515Z",
-      "updated": "2021-11-06T07:05:11.515Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
-  "geofiles.be.ch": [
-    {
-      "id": 149,
-      "url": "https://geofiles.be.ch/geoportal/pub/stac/de/catalog.json",
-      "slug": "geoportal-des-kantons-bern",
-      "title": "Geoportal des Kantons Bern",
-      "summary": "Geoportal of the Canton of Bern in Switzerland: Geoproducts for download",
-      "access": "public",
-      "created": "2026-04-10T22:48:42.830Z",
-      "updated": "2026-04-10T22:48:42.830Z",
       "isPrivate": false,
       "isApi": false,
       "accessInfo": null
@@ -573,51 +397,6 @@
       "accessInfo": null
     }
   ],
-  "rawcdn.githack.com": [
-    {
-      "id": 53,
-      "url": "https://rawcdn.githack.com/IDE-FCyT/IDE-FCyT/main/docs/catalog/stac_catalog.json",
-      "slug": "ide-facultad-de-ciencia-y-tecnologia-uader",
-      "title": "IDE Facultad de Ciencia y Tecnolog\u00eda UADER",
-      "summary": "Lista de raster y vectores presentes en la IDE de la Facultad de Ciencia y Tecnolog\u00eda - UADER ",
-      "access": "public",
-      "created": "2022-06-23T15:00:45.539Z",
-      "updated": "2026-06-27T20:25:10.469Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
-  "ard.maxar.com": [
-    {
-      "id": 50,
-      "url": "https://ard.maxar.com/samples/catalog.json",
-      "slug": "maxar-ard-sample-data",
-      "title": "Maxar ARD Sample Data",
-      "summary": "Root Catalog for Maxar ARD sample data. \n\nAll contents \u24b8 Maxar and for evaluation only.",
-      "access": "public",
-      "created": "2022-04-15T22:04:14.769Z",
-      "updated": "2022-04-15T22:04:14.769Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
-  "maxar-opendata.s3.amazonaws.com": [
-    {
-      "id": 56,
-      "url": "https://maxar-opendata.s3.amazonaws.com/events/catalog.json",
-      "slug": "maxar-open-data-catalog-ard-format",
-      "title": "Maxar Open Data Catalog (ARD format)",
-      "summary": "Root catalog for the [Maxar Open Data Program](https://www.maxar.com/open-data) imagery generated through the Maxar ARD pipeline. ",
-      "access": "public",
-      "created": "2022-10-03T20:14:03.104Z",
-      "updated": "2022-10-03T20:14:03.104Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
   "mideafind.com": [
     {
       "id": 158,
@@ -628,51 +407,6 @@
       "access": "public",
       "created": "2026-07-31T02:54:05.936Z",
       "updated": "2026-07-31T02:54:05.936Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
-  "datacloud.icgc.cat": [
-    {
-      "id": 52,
-      "url": "https://datacloud.icgc.cat/stac-catalog/catalog.json",
-      "slug": "catalonia-monthly-sentinel2",
-      "title": "Monthly Mosaic of Sentinel 2 Images for Catalonia",
-      "summary": "Monthly mosaics of sentinel-2 images over Catalonia, choosing lowest cloud coverage for each timespan. Indexes several collections of different Cloud Optimized Geotiffs: RGB de 8/16 bits, IRC  8/16 bits.",
-      "access": "public",
-      "created": "2022-06-03T11:53:57.125Z",
-      "updated": "2022-06-03T11:53:57.125Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
-  "api.weather.gc.ca": [
-    {
-      "id": 29,
-      "url": "https://api.weather.gc.ca/stac/?f=json",
-      "slug": "msc-geomet",
-      "title": "MSC GeoMet - GeoMet-OGC-API",
-      "summary": "GeoMet-OGC-API provides public access to the Meteorological Service of Canada (MSC) and Environment and Climate Change Canada (ECCC) data via interoperable web services and application programming interfaces (API).",
-      "access": "public",
-      "created": "2021-02-19T21:48:40.527Z",
-      "updated": "2023-02-15T11:00:00.000Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
-  "nasa-iserv.s3-us-west-2.amazonaws.com": [
-    {
-      "id": 14,
-      "url": "https://nasa-iserv.s3-us-west-2.amazonaws.com/catalog/catalog.json",
-      "slug": "nasa-iserv",
-      "title": "NASA ISERV",
-      "summary": "ISS SERVIR Environmental Research and Visualization System (ISERV) Level-0 Product. These products were created at the ISERV Science Operation Center (SOC) at the National Space Science and Technology Center. ISERV is an automated system designed to acquire images of the Earth's surface from the International Space Station (ISS).",
-      "access": "public",
-      "created": "2020-09-01T20:05:35.697Z",
-      "updated": "2020-09-01T20:05:35.697Z",
       "isPrivate": false,
       "isApi": false,
       "accessInfo": null
@@ -693,51 +427,6 @@
       "accessInfo": null
     }
   ],
-  "nz-elevation.s3.ap-southeast-2.amazonaws.com": [
-    {
-      "id": 92,
-      "url": "https://nz-elevation.s3.ap-southeast-2.amazonaws.com/catalog.json",
-      "slug": "nz-elevation",
-      "title": "New Zealand Elevation",
-      "summary": "Toit\u016b Te Whenua Land Information New Zealand makes New Zealand's publicly owned elevation archive freely available to use under an open licence. This public S3 bucket has been made available to enable bulk access and cloud-based data processing.",
-      "access": "public",
-      "created": "2024-03-14T00:44:17.769Z",
-      "updated": "2026-06-27T20:22:39.030Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
-  "nz-imagery.s3.ap-southeast-2.amazonaws.com": [
-    {
-      "id": 82,
-      "url": "https://nz-imagery.s3.ap-southeast-2.amazonaws.com/catalog.json",
-      "slug": "nz-imagery",
-      "title": "New Zealand Imagery",
-      "summary": "Toit\u016b Te Whenua Land Information New Zealand makes New Zealand's publicly owned aerial and satellite imagery archive freely available to use under an open licence. This public S3 bucket has been made available to enable bulk access and cloud-based data processing.",
-      "access": "public",
-      "created": "2023-09-18T02:32:53.754Z",
-      "updated": "2026-06-27T20:22:43.334Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
-  "noaadata.apps.nsidc.org": [
-    {
-      "id": 159,
-      "url": "https://noaadata.apps.nsidc.org/NOAA/G02202_V6/stac/catalog.json",
-      "slug": "noaa-climate-data-records",
-      "title": "NOAA Climate Data Records",
-      "summary": "NOAA Climate Data Records (CDRs) are robust, sustainable, and scientifically defensible climate records that can be used to assess climate variability and change.",
-      "access": "public",
-      "created": "2026-08-05T20:37:05.409Z",
-      "updated": "2026-08-05T20:37:05.409Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
   "esa-earthcode.github.io": [
     {
       "id": 66,
@@ -748,51 +437,6 @@
       "access": "public",
       "created": "2023-01-06T17:21:43.499Z",
       "updated": "2026-06-27T20:13:54.966Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
-  "portal.opentopography.org": [
-    {
-      "id": 25,
-      "url": "https://portal.opentopography.org/stac/raster_catalog.json",
-      "slug": "opentopography",
-      "title": "OpenTopography Raster DEM Data Catalog",
-      "summary": "A catalog of OpenTopography hosted raster topography (digital elevation model) datasets.",
-      "access": "public",
-      "created": "2020-11-18T04:57:20.431Z",
-      "updated": "2025-07-31T10:32:20.431Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
-  "stac.overturemaps.org": [
-    {
-      "id": 141,
-      "url": "https://stac.overturemaps.org/catalog.json",
-      "slug": "overture",
-      "title": "Overture Releases",
-      "summary": "All Overture releases. Addresses, Base, Buildings, Divisions, Places, Transportation as GeoParquet files.",
-      "access": "public",
-      "created": "2026-02-04T22:42:19.419Z",
-      "updated": "2026-02-04T22:42:19.419Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
-  "www.planet.com": [
-    {
-      "id": 44,
-      "url": "https://www.planet.com/data/stac/catalog.json",
-      "slug": "planet-labs-stac-catalog",
-      "title": "Planet Labs STAC Catalog",
-      "summary": "This catalog serves as the main root STAC Catalog for Planet Labs. It links to 3 small static catalogs of open data, including a small set of Planet Disaster Data, some CC-BY SkySat collects and the complete Spacenet 7 images and labels.",
-      "access": "public",
-      "created": "2021-12-08T22:55:27.717Z",
-      "updated": "2021-12-08T22:55:27.717Z",
       "isPrivate": false,
       "isApi": false,
       "accessInfo": null
@@ -813,64 +457,6 @@
       "accessInfo": null
     }
   ],
-  "radiantearth.blob.core.windows.net": [
-    {
-      "id": 74,
-      "url": "https://radiantearth.blob.core.windows.net/mlhub/rapidai4eo/stac-v1.0/catalog.json",
-      "slug": "rapidai4eo-v1",
-      "title": "RapidAI4EO",
-      "summary": "RapidAI4EO corpus of spatiotemporal imagery and LULC labels for machine learning training.",
-      "access": "public",
-      "created": "2023-05-18T09:22:01.688Z",
-      "updated": "2023-05-18T09:22:01.688Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
-  "rosetta-3dcomet.cnes.fr": [
-    {
-      "id": 156,
-      "url": "https://rosetta-3dcomet.cnes.fr/stac/collection.json",
-      "slug": "rosetta-osiris-anaglyphs",
-      "title": "Rosetta OSIRIS Anaglyphs of Comet 67P",
-      "summary": "This catalog presents anaglyphs made from stereo images captured by ESA's Rosetta mission at comet 67P/Churyumov-Gerasimenko. Suitable parallax image pairs were selected, corrected for illumination, aligned, brightness-matched, and processed using anaglyph-generation software.",
-      "access": "public",
-      "created": "2026-07-01T07:23:38.228Z",
-      "updated": "2026-07-01T07:23:38.228Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
-  "gws-access.jasmin.ac.uk": [
-    {
-      "id": 31,
-      "url": "https://gws-access.jasmin.ac.uk/public/odanceo/S2_L2/collection.json",
-      "slug": "s2-for-ghana",
-      "title": "S2 for Ghana",
-      "summary": "Sentinel 2 Surface Reflectance over Ghana using SIAC AC.",
-      "access": "public",
-      "created": "2021-04-21T13:43:48.505Z",
-      "updated": "2021-04-21T13:43:48.505Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    },
-    {
-      "id": 54,
-      "url": "https://gws-access.jasmin.ac.uk/public/nceo_ard/NCEO_ARD_STAC/catalog.json",
-      "slug": "uk-nceo-analysis-ready-data-ard",
-      "title": "UK NCEO Analysis Ready Data (ARD)",
-      "summary": "This STAC catalog contains Sentinel 2 (S2) surface reflectance over the UK from 2017 to 2019. The surface reflectance have been processed by SIAC atmospheric correction method, with per pixel uncertainty information.",
-      "access": "public",
-      "created": "2022-08-18T12:23:01.252Z",
-      "updated": "2022-08-18T12:23:01.252Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
   "meeo-s3.s3.amazonaws.com": [
     {
       "id": 65,
@@ -881,51 +467,6 @@
       "access": "public",
       "created": "2023-01-04T11:24:29.169Z",
       "updated": "2023-01-04T11:24:29.169Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
-  "meeo-s5p.s3.amazonaws.com": [
-    {
-      "id": 11,
-      "url": "https://meeo-s5p.s3.amazonaws.com/catalog.json",
-      "slug": "sentinel-5p-level2-aws",
-      "title": "Sentinel 5P Level 2 on AWS",
-      "summary": "Observations from the Sentinel-5 Precursor (Sentinel-5P) satellite of the European Commission\u2019s Copernicus Earth Observation Programme. Hosted on AWS.",
-      "access": "public",
-      "created": "2020-08-24T20:55:25.010Z",
-      "updated": "2020-08-24T20:55:25.010Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
-  "worldbank.github.io": [
-    {
-      "id": 116,
-      "url": "https://worldbank.github.io/DECAT_Space2Stats/stac/catalog.json",
-      "slug": "space2stats-database",
-      "title": "Space2Stats Database",
-      "summary": "This database contains geospatial statistics for the entire globe standardized to a hexagonal grid. The variables cover a wide range of geographic themes relevant to international development, including demographic, socio-economic, environmental, climate, and infrastructure.",
-      "access": "public",
-      "created": "2025-04-30T23:20:56.352Z",
-      "updated": "2026-06-27T20:25:41.414Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
-  "canada-spot-ortho.s3.amazonaws.com": [
-    {
-      "id": 12,
-      "url": "https://canada-spot-ortho.s3.amazonaws.com/canada_spot_orthoimages/catalog.json",
-      "slug": "spot-orthoimages-canada-2005",
-      "title": "SPOT Orthoimages of Canada (2005-2010)",
-      "summary": "Canada's Orthoimages 2005-2010 is the national medium-resolution imagery coverage of Canada. These digital raster data acquired by the Spot4 and Spot5 satellites comprise five spectral bands.",
-      "access": "public",
-      "created": "2020-08-24T20:59:43.049Z",
-      "updated": "2026-06-27T20:24:35.828Z",
       "isPrivate": false,
       "isApi": false,
       "accessInfo": null
@@ -946,103 +487,6 @@
       "accessInfo": null
     }
   ],
-  "api.fgdc.gov": [
-    {
-      "id": 130,
-      "url": "https://api.fgdc.gov/ngda/address/",
-      "slug": "us-address-data-theme",
-      "title": "\ud83c\uddfa\ud83c\uddf8 United States | Address Data Theme",
-      "summary": "The Address Theme consists of the data elements, attributes, and metadata that specify a fixed geographic location by reference to a thoroughfare or landmark, or specify a point of postal delivery, or both. ",
-      "access": "public",
-      "created": "2025-08-15T22:04:25.480Z",
-      "updated": "2025-08-15T22:04:25.480Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    },
-    {
-      "id": 127,
-      "url": "https://api.fgdc.gov/states/al/",
-      "slug": "us-al-geoportal-resources",
-      "title": "\ud83c\uddfa\ud83c\uddf8 United States | Alabama Geoportal Resources",
-      "summary": "Alabama's Open Data Portal (ODP) is the states platform for exploring and downloading open data, discovering and building apps, and engaging the public through geospatial data. Inside Alabama's ODP, you can browse, search, preview, and download a variety of Alabama and national geospatial data.",
-      "access": "public",
-      "created": "2025-08-03T23:15:25.750Z",
-      "updated": "2025-08-03T23:15:25.750Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    },
-    {
-      "id": 128,
-      "url": "https://api.fgdc.gov/states/ak/",
-      "slug": "us-ak-geospatial-resources",
-      "title": "\ud83c\uddfa\ud83c\uddf8 United States | Alaska Geospatial Resources",
-      "summary": "Alaska\u2019s GeoPortal is the states platform for exploring and downloading open data, discovering and building apps, and engaging the public through geospatial data. The OGC Compliant API allows you to browse, search, preview, and download a variety of state and national geospatial data.",
-      "access": "public",
-      "created": "2025-08-03T23:38:01.925Z",
-      "updated": "2025-08-03T23:38:01.925Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    },
-    {
-      "id": 131,
-      "url": "https://api.fgdc.gov/ngda/cadastre/",
-      "slug": "us-cadastre-data-theme",
-      "title": "\ud83c\uddfa\ud83c\uddf8 United States | Cadastre Data Theme",
-      "summary": "Cadastre information from the U.S. Past, current, and future rights and interests in real property including the spatial information necessary to describe geographic extents. ",
-      "access": "public",
-      "created": "2025-08-15T22:12:27.828Z",
-      "updated": "2025-08-15T22:12:27.828Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    },
-    {
-      "id": 129,
-      "url": "https://api.fgdc.gov/states/ca/",
-      "slug": "us-ca-geospatial-resources",
-      "title": "\ud83c\uddfa\ud83c\uddf8 United States | California Geospatial Data",
-      "summary": "California\u2019s GeoPortal is the states platform for exploring and downloading open data, discovering and building apps, and engaging the public through geospatial data. The OGC Compliant API allows you to browse, search, preview, and download a variety of state and national geospatial data.",
-      "access": "public",
-      "created": "2025-08-04T01:36:46.659Z",
-      "updated": "2025-08-04T01:36:46.659Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
-  "disasters-geoplatform.hub.arcgis.com": [
-    {
-      "id": 126,
-      "url": "https://disasters-geoplatform.hub.arcgis.com/api/search/v1/collections/all",
-      "slug": "us-disasters-community",
-      "title": "\ud83c\uddfa\ud83c\uddf8  United States | Disasters Community Data",
-      "summary": "This site provides a unified environment for community partners to publish, share, and access authoritative geospatial data, applications, and resources related to the preparedness, response, recovery, and mitigation of disasters.",
-      "access": "public",
-      "created": "2025-08-03T22:59:45.433Z",
-      "updated": "2025-08-03T22:59:45.433Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
-  "ngda-transportation-geoplatform.hub.arcgis.com": [
-    {
-      "id": 125,
-      "url": "https://ngda-transportation-geoplatform.hub.arcgis.com/api/search/v1/collections/all",
-      "slug": "us-ngda-transportation-theme-data",
-      "title": "United States : NGDA Transportation Theme Data",
-      "summary": "United States : NGDA Transportation Theme : Collection",
-      "access": "public",
-      "created": "2025-08-03T22:48:47.461Z",
-      "updated": "2025-08-03T22:48:47.461Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
   "stac.geoplatform.gov": [
     {
       "id": 85,
@@ -1053,51 +497,6 @@
       "access": "public",
       "created": "2023-10-13T23:46:58.015Z",
       "updated": "2023-10-17T12:46:58.015Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
-  "s3-us-west-2.amazonaws.com": [
-    {
-      "id": 13,
-      "url": "https://s3-us-west-2.amazonaws.com/usgs-lidar-stac/ept/catalog.json",
-      "slug": "usgs-3dep-lidar",
-      "title": "USGS 3DEP LiDAR Point Clouds",
-      "summary": "LiDAR 3DEP elevation data over the conterminous United States, Hawaii, and the U.S. territories, acquired over an 8-year period. Hosted on AWS.",
-      "access": "public",
-      "created": "2020-08-26T19:23:18.645Z",
-      "updated": "2026-06-27T20:10:26.109Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
-  "asc-stacbrowser.s3-website-us-west-2.amazonaws.com": [
-    {
-      "id": 38,
-      "url": "http://asc-stacbrowser.s3-website-us-west-2.amazonaws.com/catalog.json",
-      "slug": "usgs-astrogeology-ard",
-      "title": "USGS Astrogeology Provided Analysis Ready Data",
-      "summary": "Analysis Ready Data (ARD) hosted by USGS Astrogeology. This catalog is organized by planetary body (e.g., Mars or Jupiter). Within each sub-catalog, users will find ARD orgamized by moon and/or data type (e.g., Europa, or kaguyaTC DTMs) depending upon how much logical nesting is required.",
-      "access": "public",
-      "created": "2021-08-11T14:09:33.168Z",
-      "updated": "2026-06-27T20:25:00.949Z",
-      "isPrivate": false,
-      "isApi": false,
-      "accessInfo": null
-    }
-  ],
-  "globalnightlight.s3.amazonaws.com": [
-    {
-      "id": 28,
-      "url": "https://globalnightlight.s3.amazonaws.com/VIIRS_npp_catalog.json",
-      "slug": "world-bank-light-every-night",
-      "title": "World Bank - Light Every Night",
-      "summary": "Nightly visible radiance catalogues from VIIRS DNB NPP for 2012/04 through 2020/12.",
-      "access": "public",
-      "created": "2021-02-16T10:01:48.253Z",
-      "updated": "2021-02-16T10:01:48.253Z",
       "isPrivate": false,
       "isApi": false,
       "accessInfo": null
