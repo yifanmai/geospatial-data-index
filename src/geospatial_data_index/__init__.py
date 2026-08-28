@@ -1,6 +1,6 @@
+import json
 import traceback
 from pathlib import Path
-import json
 
 from geospatial_data_index.crawl import crawl_root_catalog
 from geospatial_data_index.ingest_into_database import ingest_catalog_into_mongodb

@@ -1,9 +1,9 @@
-import geojson_validator
 import os
 
-from pystac import Catalog
+import geojson_validator
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
+from pystac import Catalog
 
 MONGODB_URI = os.environ.get("MONGODB_URI")
 # Create a new client and connect to the server

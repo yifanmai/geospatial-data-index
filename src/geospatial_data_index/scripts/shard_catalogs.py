@@ -1,20 +1,19 @@
-from pathlib import Path
-from collections import defaultdict
 import argparse
-import re
 import json
-from typing import Dict, List
+import re
+from collections import defaultdict
+from pathlib import Path
 
 CATALOG_HOST_PATTERN = re.compile(r"[^/]+://([^/]+)/?")
 
-def get_catalog_host(catalog: Dict) -> str: 
+def get_catalog_host(catalog: dict) -> str: 
     catalog_url = catalog["url"]
     match = CATALOG_HOST_PATTERN.match(catalog_url)
     if not match:
         return catalog_url.split("/")[0]
     return match[1]
 
-def is_public_static_catalog(catalog: Dict) -> bool:
+def is_public_static_catalog(catalog: dict) -> bool:
     return not catalog["isPrivate"]  and not catalog["isApi"]
 
 def shard_catalogs():
@@ -31,7 +30,7 @@ def shard_catalogs():
 
     public_static_catalogs = [catalog for catalog in all_catalogs if is_public_static_catalog(catalog)]
 
-    host_to_catalogs: Dict[str, List[Dict]] = defaultdict(list)
+    host_to_catalogs: dict[str, list[dict]] = defaultdict(list)
     for catalog in public_static_catalogs:
         host_to_catalogs[get_catalog_host(catalog)].append(catalog)
 

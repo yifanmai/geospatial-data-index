@@ -1,10 +1,9 @@
 import json
 import logging
-from time import sleep
 from pathlib import Path
+from time import sleep
 
 from pystac import Catalog, Collection, Item, Link, STACObject
-
 
 logger = logging.getLogger(__name__)
 
@@ -75,13 +74,13 @@ def normalize_and_save_catalog(catalog: Catalog, destination_path: Path, id_stra
     for child in catalog.get_children():
         try:
             normalize_and_save_catalog(child, catalog_destination_directory, id_strategy)
-        except Exception as e:
+        except Exception:
             logger.exception(f"Could not save {child.id} to {catalog_destination_directory}")
     if isinstance(catalog, Collection):
         for item in catalog.get_items():
             try:
                 normalize_and_save_item(item, catalog, catalog_destination_directory, id_strategy)
-            except Exception as e:
+            except Exception:
                 logger.exception(f"Could not save {item.id} to {catalog_destination_directory}")
     set_crawl_status(catalog_destination_directory, FINISHED)
     catalog.save_object()

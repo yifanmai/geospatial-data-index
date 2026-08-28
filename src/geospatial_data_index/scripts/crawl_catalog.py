@@ -1,7 +1,8 @@
-from pathlib import Path
 import argparse
+from pathlib import Path
 
 from geospatial_data_index.crawl import crawl_root_catalog
+
 
 def main():
     parser = argparse.ArgumentParser()
