@@ -1,3 +1,4 @@
+import itertools
 import os
 import json
 import logging
@@ -7,6 +8,7 @@ from typing import Optional
 
 from pystac import Catalog, Collection, Item, Link, STACObject
 from pystac.layout import HrefLayoutStrategy, BestPracticesLayoutStrategy
+from pystac.errors import STACError
 
 logger = logging.getLogger(__name__)
 
@@ -66,9 +68,12 @@ def crawl_root_catalog(source_path: str, destination_path: Path):
         # Try to resume from destination
         catalog = Catalog.from_file(catalog_destination_href)
     except (FileNotFoundError, json.decoder.JSONDecodeError):
+        make_all_child_and_item_links_absolute(source_catalog)
         source_catalog.set_self_href(catalog_destination_href)
         source_catalog.save_object()
         catalog = source_catalog
+    # print(catalog_destination_href)
+    # print(catalog.get_root())
     crawl_catalog_recursively(catalog, BestPracticesLayoutStrategy())
 
 
@@ -78,19 +83,17 @@ def crawl_catalog_recursively(catalog: Catalog, href_layout_strategy: HrefLayout
     Postcondition: all descendents are in the destination directory."""
     catalog_href = catalog.get_self_href()
     if _get_crawl_status(catalog) == FINISHED:
-        logger.debug(f"skipping {catalog_href}")
+        print(f"skipping {catalog_href}")
         return
-    logger.debug(f"crawling {catalog_href}")
+    print(f"crawling {catalog_href}")
     _set_crawl_status(catalog, RUNNING)
     
-    catalog_href = catalog.get_self_href()
-    for child in catalog.get_children():
+    for child in catalog.get_children():    
         # Child can be from the source or destination directory.
-        child_href = href_layout_strategy.get_href(child, catalog_href, is_root=False)
         # Mirror this child from the source to the destination directory.
         # This is idempotent.
         # If the child is already in the destination directory, this does a no-op round trip.
-        child.set_self_href(child_href)
+        update_catalog_links(child, catalog, href_layout_strategy)
         child.save_object()
         catalog.save_object()
         crawl_catalog_recursively(child, href_layout_strategy)
@@ -109,13 +112,32 @@ def update_catalog_links(catalog: Catalog, parent_catalog: Catalog, href_layout_
     """
     root = parent_catalog.get_root()
     assert root
-    catalog.set_root(root)
+    STACObject.set_root(catalog, root)
     catalog.set_parent(parent_catalog)
-    parent_href = catalog.get_self_href()
+    make_all_child_and_item_links_absolute(catalog)
+    if isinstance(catalog, Collection):
+        catalog.make_asset_hrefs_absolute()
+    add_derived_from_link_to_self_href(catalog)  # Must be run before calling catalog.set_self_href()
+    parent_href = parent_catalog.get_self_href()
     assert parent_href
-    add_derived_from_link_to_self_href(catalog)
     catalog.set_self_href(href_layout_strategy.get_href(catalog, parent_href, is_root=False))
+    # import pdb
+    # pdb.set_trace()
+    
 
+def make_all_child_and_item_links_absolute(catalog: Catalog):
+    """NOT recursive"""
+    catalog.make_all_asset_hrefs_absolute
+    for link in itertools.chain(catalog.get_child_links(), catalog.get_item_links()):
+        try:
+            absolute_href = link.absolute_href
+            link.target = absolute_href
+        except ValueError:
+            pass
+    # print(list(catalog.get_children()))
+    # import pdb
+    # pdb.set_trace()
+        
 
 
 def update_item_links(item: Item, collection: Collection, href_layout_strategy: HrefLayoutStrategy) -> None:
@@ -124,7 +146,9 @@ def update_item_links(item: Item, collection: Collection, href_layout_strategy: 
     """
     root = collection.get_root()
     assert root
-    item.set_root(root)
+
+    # Cannot use `Item.set_root()` because it is recursive.
+    STACObject.set_root(item, root)
     item.set_parent(collection)
     collection_href = collection.get_self_href()
     assert collection_href
@@ -133,5 +157,6 @@ def update_item_links(item: Item, collection: Collection, href_layout_strategy: 
     else:
         item.remove_links("collection")
         item.add_link(Link.collection(collection))
-    add_derived_from_link_to_self_href(item)
+    item.make_asset_hrefs_absolute()
+    add_derived_from_link_to_self_href(item)  # Must be run before calling catalog.set_self_href()
     item.set_self_href(href_layout_strategy.get_href(item, collection_href, is_root=False))
