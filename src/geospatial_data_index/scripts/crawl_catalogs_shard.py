@@ -1,6 +1,7 @@
 import argparse
 import os
 import json
+import traceback
 
 from geospatial_data_index.crawl import crawl_root_catalog
 
@@ -18,4 +19,7 @@ def main():
             catalog_slug = catalog["slug"]
             catalog_url = catalog["url"]
             catalog_output_directory = os.path.join(args.output_directory, catalog_slug)
-            crawl_root_catalog(catalog_url, catalog_output_directory)
+            try:
+                crawl_root_catalog(catalog_url, catalog_output_directory)
+            except Exception:
+                traceback.print_exc()

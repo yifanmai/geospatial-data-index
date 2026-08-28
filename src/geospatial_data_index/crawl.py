@@ -38,6 +38,7 @@ def _crawl_status_path(catalog: Catalog) -> str:
 
 
 def _get_crawl_status(catalog: Catalog) -> str:
+    print(_crawl_status_path(catalog))
     try:
         with open(_crawl_status_path(catalog), "r") as status_file:
             status_contents = json.load(status_file)
@@ -61,6 +62,7 @@ def add_derived_from_link_to_self_href(stac_object: STACObject) -> None:
 
 
 def crawl_root_catalog(source_path: str, destination_path: Path):
+    sleep(0.1)
     href_layout_strategy = BestPracticesLayoutStrategy()
     source_catalog = Catalog.from_file(source_path)
     catalog_destination_href = href_layout_strategy.get_href(source_catalog, str(destination_path), is_root=True)
@@ -88,7 +90,8 @@ def crawl_catalog_recursively(catalog: Catalog, href_layout_strategy: HrefLayout
     print(f"crawling {catalog_href}")
     _set_crawl_status(catalog, RUNNING)
     
-    for child in catalog.get_children():    
+    for child in catalog.get_children():
+        sleep(0.1)
         # Child can be from the source or destination directory.
         # Mirror this child from the source to the destination directory.
         # This is idempotent.
@@ -99,6 +102,7 @@ def crawl_catalog_recursively(catalog: Catalog, href_layout_strategy: HrefLayout
         crawl_catalog_recursively(child, href_layout_strategy)
     if isinstance(catalog, Collection):
         for item in catalog.get_items():
+            sleep(0.1)
             update_item_links(item, catalog, href_layout_strategy)
             item.save_object()
             catalog.save_object()
