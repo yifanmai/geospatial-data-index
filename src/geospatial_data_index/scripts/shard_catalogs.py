@@ -44,6 +44,6 @@ def shard_catalogs():
         shard_path = output_path / f"shard_{index}.json"
         with open(shard_path, "w") as shard_file:
             print(f"writing {shard_path}")
-            json.dump(shard, shard_file, indent=2)
+            json.dump(shards[index], shard_file, indent=2)
 
     print(f"Wrote {len(public_static_catalogs)} catalogs in {len(host_to_catalogs)} hosts to {num_shards} shards.")

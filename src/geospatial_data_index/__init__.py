@@ -3,7 +3,7 @@ import traceback
 from pathlib import Path
 
 from geospatial_data_index.crawl import crawl_root_catalog
-from geospatial_data_index.ingest_into_database import ingest_catalog_into_mongodb
+
 
 CATALOGS_INDEX_PATH = "/home/yifanmai/oss/geospatial-data-index/catalogs.json"
 TARGET_PATH = "/home/yifanmai/oss/geospatial-data-index/stac_catalogs"
