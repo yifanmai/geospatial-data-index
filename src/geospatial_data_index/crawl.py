@@ -103,7 +103,6 @@ def crawl_catalog_recursively(catalog: Catalog, href_layout_strategy: HrefLayout
             item.save_object()
             catalog.save_object()
     _set_crawl_status(catalog, FINISHED)
-    catalog.save_object()
 
 
 def update_catalog_links(catalog: Catalog, parent_catalog: Catalog, href_layout_strategy: HrefLayoutStrategy) -> None:
