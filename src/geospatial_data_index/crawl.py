@@ -2,6 +2,7 @@ import json
 import logging
 from pathlib import Path
 from time import sleep
+from typing import Optional
 
 from pystac import Catalog, Collection, Item, Link, STACObject
 from pystac.layout import HrefLayoutStrategy, BestPracticesLayoutStrategy
@@ -25,6 +26,10 @@ FINISHED = "finished"
 
 STATUS_FILE_NAME = "status.json"
 STATUS_KEY = "status"
+
+
+def _ensure_directory_exists(directory_path: Path) -> None:
+    directory_path.mkdir(parents=True, exist_ok=True)
 
 def get_crawl_status(catalog_destination_directory: Path) -> str:
     status_destination_path = catalog_destination_directory / STATUS_FILE_NAME
@@ -54,28 +59,26 @@ def add_derived_from_link_to_self_href(stac_object: STACObject) -> None:
 
 def crawl_root_catalog(source_path: str, destination_path: Path):
     catalog = Catalog.from_file(source_path)
-    normalize_and_save_catalog(catalog, destination_path, BestPracticesLayoutStrategy())
+    # atomicity?
+    catalog.save_object()
+    normalize_and_save_catalog(catalog, None, destination_path, BestPracticesLayoutStrategy())
 
 
-def normalize_and_save_catalog(catalog: Catalog, destination_path: Path, href_layout_strategy: HrefLayoutStrategy) -> None:
-    catalog_destination_directory = destination_path / catalog.id
+def normalize_and_save_catalog(catalog: Catalog, parent_catalog: Optional[Catalog], catalog_destination_directory: Path, href_layout_strategy: HrefLayoutStrategy) -> None:
+    _ensure_directory_exists(catalog_destination_directory)
     crawl_status = get_crawl_status(catalog_destination_directory)
     if crawl_status == FINISHED:
         print(f"skipping {catalog_destination_directory}")
         return
 
+    
+
     print(f"writing {catalog_destination_directory}")
-    destination_path.mkdir(parents=True, exist_ok=True)
-    catalog.resolve_links()
-    if isinstance(catalog, Collection):
-        catalog_destination_path = catalog_destination_directory / "collection.json"
-    else:
-        catalog_destination_path = catalog_destination_directory / "catalog.json"
     add_derived_from_link_to_self_href(catalog)
-    catalog.set_self_href(str(catalog_destination_path))
+    catalog.set_self_href(href_layout_strategy.get_href(catalog, str(catalog_destination_directory), is_root=parent_catalog is None))
     for child in catalog.get_children():
         try:
-            normalize_and_save_catalog(child, catalog_destination_directory, href_layout_strategy)
+            normalize_and_save_catalog(child, parent_catalog, catalog_destination_directory, href_layout_strategy)
         except Exception:
             logger.exception(f"Could not save {child.id} to {catalog_destination_directory}")
     if isinstance(catalog, Collection):
@@ -90,8 +93,7 @@ def normalize_and_save_catalog(catalog: Catalog, destination_path: Path, href_la
 
 def normalize_and_save_item(item: Item, collection: Collection, collection_destination_directory: Path, href_layout_strategy: HrefLayoutStrategy) -> None:
     sleep(0.1)
-    collection_destination_directory.mkdir(parents=True, exist_ok=True)
-    item_destination_path = collection_destination_directory / f"{item.id}.json"
+    _ensure_directory_exists(collection_destination_directory)
     collection_href = collection.get_self_href()
     assert collection_href
     collection_links = item.get_links("collection")
@@ -102,5 +104,6 @@ def normalize_and_save_item(item: Item, collection: Collection, collection_desti
     elif len(collection_links) == 0:
         item.add_link(Link.parent(collection))
     add_derived_from_link_to_self_href(item)
-    item.set_self_href(str(item_destination_path))
+    item.set_self_href(href_layout_strategy.get_href(item, str(collection_destination_directory), is_root=False))
     item.save_object()
+    collection.save_object()
