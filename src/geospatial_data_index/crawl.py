@@ -31,6 +31,13 @@ STATUS_FILE_NAME = "status.json"
 STATUS_KEY = "status"
 
 
+ITEMS_PER_COLLECTION_LIMIT = 1000
+
+
+class CrawlException(Exception):
+    pass
+
+
 def _crawl_status_path(catalog: Catalog) -> str:
     catalog_href = catalog.get_self_href()
     assert catalog_href
@@ -99,7 +106,9 @@ def crawl_catalog_recursively(catalog: Catalog, href_layout_strategy: HrefLayout
         catalog.save_object()
         crawl_catalog_recursively(child, href_layout_strategy)
     if isinstance(catalog, Collection):
-        for item in catalog.get_items():
+        for item_index, item in enumerate(catalog.get_items()):
+            if item_index >= ITEMS_PER_COLLECTION_LIMIT:
+                raise CrawlException(f"Collection has more than the limit of {ITEMS_PER_COLLECTION_LIMIT} items")
             sleep(0.1)
             update_item_links(item, catalog, href_layout_strategy)
             logger.info(f"item {item.get_self_href()}")
@@ -132,6 +141,7 @@ def make_all_child_and_item_links_absolute(catalog: Catalog):
             absolute_href = link.absolute_href
             link.target = absolute_href
         except ValueError:
+            # Skip links with no href
             pass
 
 
