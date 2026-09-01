@@ -38,7 +38,7 @@ def _crawl_status_path(catalog: Catalog) -> str:
 
 
 def _get_crawl_status(catalog: Catalog) -> str:
-    print(_crawl_status_path(catalog))
+    logger.info(_crawl_status_path(catalog))
     try:
         with open(_crawl_status_path(catalog), "r") as status_file:
             status_contents = json.load(status_file)
@@ -74,8 +74,6 @@ def crawl_root_catalog(source_path: str, destination_path: Path):
         source_catalog.set_self_href(catalog_destination_href)
         source_catalog.save_object()
         catalog = source_catalog
-    # print(catalog_destination_href)
-    # print(catalog.get_root())
     crawl_catalog_recursively(catalog, BestPracticesLayoutStrategy())
 
 
@@ -85,9 +83,9 @@ def crawl_catalog_recursively(catalog: Catalog, href_layout_strategy: HrefLayout
     Postcondition: all descendents are in the destination directory."""
     catalog_href = catalog.get_self_href()
     if _get_crawl_status(catalog) == FINISHED:
-        print(f"skipping {catalog_href}")
+        logger.info(f"skipping {catalog_href}")
         return
-    print(f"crawling {catalog_href}")
+    logger.info(f"crawling {catalog_href}")
     _set_crawl_status(catalog, RUNNING)
     
     for child in catalog.get_children():
@@ -104,6 +102,7 @@ def crawl_catalog_recursively(catalog: Catalog, href_layout_strategy: HrefLayout
         for item in catalog.get_items():
             sleep(0.1)
             update_item_links(item, catalog, href_layout_strategy)
+            logger.info(f"item {item.get_self_href()}")
             item.save_object()
             catalog.save_object()
     _set_crawl_status(catalog, FINISHED)
@@ -124,23 +123,16 @@ def update_catalog_links(catalog: Catalog, parent_catalog: Catalog, href_layout_
     parent_href = parent_catalog.get_self_href()
     assert parent_href
     catalog.set_self_href(href_layout_strategy.get_href(catalog, parent_href, is_root=False))
-    # import pdb
-    # pdb.set_trace()
     
 
 def make_all_child_and_item_links_absolute(catalog: Catalog):
     """NOT recursive"""
-    catalog.make_all_asset_hrefs_absolute
     for link in itertools.chain(catalog.get_child_links(), catalog.get_item_links()):
         try:
             absolute_href = link.absolute_href
             link.target = absolute_href
         except ValueError:
             pass
-    # print(list(catalog.get_children()))
-    # import pdb
-    # pdb.set_trace()
-        
 
 
 def update_item_links(item: Item, collection: Collection, href_layout_strategy: HrefLayoutStrategy) -> None:

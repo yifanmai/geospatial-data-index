@@ -1,4 +1,5 @@
 import argparse
+import logging
 import os
 import json
 import traceback
@@ -7,6 +8,7 @@ from geospatial_data_index.crawl import crawl_root_catalog
 
 
 def main():
+    logging.basicConfig(level=logging.INFO)
     parser = argparse.ArgumentParser()
     parser.add_argument("catalogs_shard", help="Path of catalogs shard")
     parser.add_argument("output_directory", help="Path to root output directory; will be created if it does not exist")
