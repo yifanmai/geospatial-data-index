@@ -31,7 +31,7 @@ STATUS_FILE_NAME = "status.json"
 STATUS_KEY = "status"
 
 
-ITEMS_PER_COLLECTION_LIMIT = 1000
+ITEMS_PER_COLLECTION_LIMIT = 100
 
 
 class CrawlException(Exception):
