@@ -8,6 +8,7 @@ authors = [
 ]
 requires-python = ">=3.12"
 dependencies = [
+    "geojson>=3.3.0",
     "geojson-validator>=0.7.0",
     "pymongo[srv]>=4.17.0",
     "pystac[validation]>=1.15.2",

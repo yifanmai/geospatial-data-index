@@ -1,3 +1,6 @@
+from datetime import datetime
+from pstats import SortKey
+import cProfile
 import itertools
 import os
 import json
@@ -102,18 +105,27 @@ def crawl_catalog_recursively(catalog: Catalog, href_layout_strategy: HrefLayout
         # This is idempotent.
         # If the child is already in the destination directory, this does a no-op round trip.
         update_catalog_links(child, catalog, href_layout_strategy)
+        print(f"before child.save_object(): {datetime.now()}")
         child.save_object()
+        print(f"after child.save_object(): {datetime.now()}")
         catalog.save_object()
+        catalog.to_dict()
         crawl_catalog_recursively(child, href_layout_strategy)
     if isinstance(catalog, Collection):
         for item_index, item in enumerate(catalog.get_items()):
             if item_index >= ITEMS_PER_COLLECTION_LIMIT:
                 raise CrawlException(f"Collection has more than the limit of {ITEMS_PER_COLLECTION_LIMIT} items")
             sleep(0.1)
+
+            # with cProfile.Profile() as pr:
             update_item_links(item, catalog, href_layout_strategy)
             logger.info(f"item {item.get_self_href()}")
-            item.save_object()
+            print(f"before catalog.save_object(): {datetime.now()}")
+            # breakpoint()
             catalog.save_object()
+            print(f"after catalog.save_object(): {datetime.now()}")
+            # pr.dump_stats(f"item_stats_{item_index}.profile")
+
     _set_crawl_status(catalog, FINISHED)
 
 
