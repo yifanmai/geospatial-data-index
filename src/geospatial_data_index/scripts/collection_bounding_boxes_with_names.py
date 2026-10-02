@@ -37,7 +37,7 @@ def main():
                     features.append(Feature(geometry=polygon))
                     collections_with_extent.append(collection_path)
             feature_collection = FeatureCollection(features=features)
-            object_to_dump = {"path": collection_path, "feature_collection": feature_collection}
+            object_to_dump = {"path": collection_path, "title": collection.get("title", ""), "description": collection.get("description", ""), "feature_collection": feature_collection}
             geojson.dump(object_to_dump, geojson_file)
             geojson_file.write("\n")
 

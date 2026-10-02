@@ -8,11 +8,15 @@ authors = [
 ]
 requires-python = ">=3.12"
 dependencies = [
+    "fastapi[standard]>=0.142.2",
     "geojson>=3.3.0",
     "geojson-validator>=0.7.0",
+    "psycopg[pool]>=3.3.6",
+    "pydantic>=2.13.5",
     "pymongo[srv]>=4.17.0",
     "pystac[validation]>=1.15.2",
     "requests>=2.34.2",
+    "shapely>=2.1.2",
 ]
 
 [project.scripts]

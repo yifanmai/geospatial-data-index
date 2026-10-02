@@ -17,14 +17,15 @@ def main():
     # print(objs)
     
     with psycopg.connect(connection_string) as conn:
-        obj = objs[0]
-        print(obj)
-        path = obj["path"]
-        geom = obj["feature_collection"]["features"][0]["geometry"]
-        
-        with conn.cursor() as cur:
-            cur.execute("INSERT INTO collections_with_names (name, geom) VALUES (%s, ST_GeomFromGeoJSON(%s))", (path, Jsonb(geom)))
-            # cur.execute("""CREATE TABLE collections_with_names (name varchar PRIMARY KEY, geom GEOMETRY)""")
+        for obj in objs:
+            path = obj["path"]
+            title = obj["title"]
+            description = obj["description"]
+            geom = obj["feature_collection"]["features"][0]["geometry"]
+            
+            with conn.cursor() as cur:
+                cur.execute("INSERT INTO stac_collections (url, title, description, bbox) VALUES (%s, %s, %s, ST_GeomFromGeoJSON(%s)) ON CONFLICT DO NOTHING", (path, title, description, Jsonb(geom)))
+                # cur.execute("""CREATE TABLE collections_with_names (name varchar PRIMARY KEY, geom GEOMETRY)""")
 
 if __name__ == "__main__":
     main()
